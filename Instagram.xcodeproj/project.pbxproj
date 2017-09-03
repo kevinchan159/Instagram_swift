@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		9F70DACEC614DF03778F5D92 /* Pods_Instagram.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BF7C51894EF4D2F259497A1 /* Pods_Instagram.framework */; };
+		C2284A0B1F5BB33200B0DBBE /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2284A0A1F5BB33200B0DBBE /* FeedViewController.swift */; };
+		C2284A0D1F5BC19800B0DBBE /* CustomPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2284A0C1F5BC19800B0DBBE /* CustomPageViewController.swift */; };
+		C2284A0F1F5BC1F500B0DBBE /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2284A0E1F5BC1F500B0DBBE /* CameraViewController.swift */; };
 		C28C36CC1F565E28004BCA5A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C28C36CB1F565E28004BCA5A /* AppDelegate.swift */; };
 		C28C36D41F565E28004BCA5A /* Instagram.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C28C36D21F565E28004BCA5A /* Instagram.xcdatamodeld */; };
 		C28C36D61F565E28004BCA5A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C28C36D51F565E28004BCA5A /* Assets.xcassets */; };
@@ -19,6 +22,9 @@
 		1159059F733EF7D4881C8445 /* Pods-Instagram.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Instagram.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Instagram/Pods-Instagram.debug.xcconfig"; sourceTree = "<group>"; };
 		7BF7C51894EF4D2F259497A1 /* Pods_Instagram.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Instagram.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B897DA7E2914181909BF99F6 /* Pods-Instagram.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Instagram.release.xcconfig"; path = "Pods/Target Support Files/Pods-Instagram/Pods-Instagram.release.xcconfig"; sourceTree = "<group>"; };
+		C2284A0A1F5BB33200B0DBBE /* FeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
+		C2284A0C1F5BC19800B0DBBE /* CustomPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomPageViewController.swift; sourceTree = "<group>"; };
+		C2284A0E1F5BC1F500B0DBBE /* CameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		C28C36C81F565E28004BCA5A /* Instagram.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Instagram.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C28C36CB1F565E28004BCA5A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C28C36D31F565E28004BCA5A /* Instagram.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Instagram.xcdatamodel; sourceTree = "<group>"; };
@@ -72,6 +78,9 @@
 			children = (
 				C28C36CB1F565E28004BCA5A /* AppDelegate.swift */,
 				C28C36E01F565E45004BCA5A /* LoginViewController.swift */,
+				C2284A0A1F5BB33200B0DBBE /* FeedViewController.swift */,
+				C2284A0C1F5BC19800B0DBBE /* CustomPageViewController.swift */,
+				C2284A0E1F5BC1F500B0DBBE /* CameraViewController.swift */,
 				C28C36D51F565E28004BCA5A /* Assets.xcassets */,
 				C28C36D71F565E28004BCA5A /* LaunchScreen.storyboard */,
 				C28C36DA1F565E28004BCA5A /* Info.plist */,
@@ -213,7 +222,10 @@
 			files = (
 				C28C36E11F565E45004BCA5A /* LoginViewController.swift in Sources */,
 				C28C36D41F565E28004BCA5A /* Instagram.xcdatamodeld in Sources */,
+				C2284A0B1F5BB33200B0DBBE /* FeedViewController.swift in Sources */,
+				C2284A0D1F5BC19800B0DBBE /* CustomPageViewController.swift in Sources */,
 				C28C36CC1F565E28004BCA5A /* AppDelegate.swift in Sources */,
+				C2284A0F1F5BC1F500B0DBBE /* CameraViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -373,6 +385,7 @@
 				C28C36DF1F565E28004BCA5A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

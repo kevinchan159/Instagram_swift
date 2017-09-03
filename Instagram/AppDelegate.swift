@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         window = UIWindow()
-        window?.rootViewController = LoginViewController()
+        window?.rootViewController = UINavigationController(rootViewController: FeedViewController())
         window?.makeKeyAndVisible()
         return true
     }

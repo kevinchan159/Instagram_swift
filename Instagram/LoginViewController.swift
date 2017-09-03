@@ -188,6 +188,19 @@ class LoginViewController: UIViewController {
         
         Alamofire.request("http://localhost:3000/login", method: .post, parameters: parameters).responseJSON { (response) in
             print(response)
+            if let JSON = response.result.value as? [String: Any] {
+                if let status = JSON["status"] as? String  {
+                    if status == "error" {
+                        let alert = UIAlertController(title: "Failed to login", message: "Check your login information", preferredStyle: UIAlertControllerStyle.alert)
+                        alert.addAction(UIAlertAction(title: "Close", style: UIAlertActionStyle.default, handler: nil))
+                        self.present(alert, animated: true, completion: nil)
+                    } else {
+                        let navigationController = UINavigationController(rootViewController: FeedViewController())
+                        self.present(navigationController, animated: true, completion: nil)
+                    }
+                }
+                
+            }
         }
     }
     
@@ -195,6 +208,9 @@ class LoginViewController: UIViewController {
         nameTextField.alpha = 0
         registerButton.alpha = 0
         loginButton.alpha = 1
+        nameTextField.text = ""
+        usernameTextField.text = ""
+        passwordTextField.text = ""
         
     }
     
@@ -202,6 +218,9 @@ class LoginViewController: UIViewController {
         loginButton.alpha = 0
         nameTextField.alpha = 1
         registerButton.alpha = 1
+        nameTextField.text = ""
+        usernameTextField.text = ""
+        passwordTextField.text = ""
         
     }
     
