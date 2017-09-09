@@ -9,22 +9,32 @@
 import UIKit
 import AVFoundation
 
-class CameraViewController: UIViewController {
+class CameraViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
+    var captureSession: AVCaptureSession!
     var captureDevice: AVCaptureDevice?
     var cameraView: UIView!
-    
+    var stillImageOutput: AVCaptureStillImageOutput?
+    var previewLayer: AVCaptureVideoPreviewLayer?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.title = "Camera"
+        cameraView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height))
+        view.addSubview(cameraView)
         
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        previewLayer?.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        let captureSession = AVCaptureSession()
+        captureSession = AVCaptureSession()
         captureSession.sessionPreset = AVCaptureSessionPreset1920x1080
         
         var camera = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo)
@@ -34,19 +44,19 @@ class CameraViewController: UIViewController {
         do {
          input = try(AVCaptureDeviceInput(device: camera))
         } catch {
+            print("error")
             return
         }
         
         if captureSession.canAddInput(input) {
-            captureSession.addInput(input)
-            
-            let stillImageOutput = AVCaptureStillImageOutput()
-            stillImageOutput.outputSettings = [AVVideoCodecKey : AVVideoCodecJPEG]
+            captureSession?.addInput(input)
+            stillImageOutput = AVCaptureStillImageOutput()
+            stillImageOutput?.outputSettings = [AVVideoCodecKey : AVVideoCodecJPEG]
             
             if captureSession.canAddOutput(stillImageOutput) {
                 captureSession.addOutput(stillImageOutput)
                 
-                let previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
+                previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
                 previewLayer?.videoGravity = AVLayerVideoGravityResizeAspect
                 previewLayer?.connection.videoOrientation = AVCaptureVideoOrientation.portrait
                 cameraView.layer.addSublayer(previewLayer!)

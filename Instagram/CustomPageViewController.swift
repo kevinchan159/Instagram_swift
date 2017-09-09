@@ -10,10 +10,42 @@ import UIKit
 
 class CustomPageViewController: UIPageViewController, UIPageViewControllerDataSource {
     
+    var cameraViewController: CameraViewController!
+    var navigationFeedController: UINavigationController!
+    var viewControllersArray: [UIViewController]!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.setViewControllers(<#T##viewControllers: [UIViewController]?##[UIViewController]?#>, direction: <#T##UIPageViewControllerNavigationDirection#>, animated: <#T##Bool#>, completion: <#T##((Bool) -> Void)?##((Bool) -> Void)?##(Bool) -> Void#>)
+        
+        
+        cameraViewController = CameraViewController()
+        navigationFeedController = UINavigationController(rootViewController: FeedViewController())
+        viewControllersArray = [navigationFeedController, cameraViewController]
+        
+        dataSource = self
+        
+        setViewControllers([viewControllersArray[0]], direction: .forward, animated: true, completion: nil)
+    }
+    
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
+        var currentViewControllerIndex = viewControllersArray.index(of: viewController)
+        if currentViewControllerIndex == 0 {
+            return nil
+        } else {
+            currentViewControllerIndex = 0
+        }
+        return viewControllersArray[currentViewControllerIndex!]
+    }
+    
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
+        var currentViewControllerIndex = viewControllersArray.index(of: viewController)
+        if currentViewControllerIndex == 0 {
+            currentViewControllerIndex = 1
+        } else {
+            return nil
+        }
+        return viewControllersArray[currentViewControllerIndex!]
     }
     
 }
