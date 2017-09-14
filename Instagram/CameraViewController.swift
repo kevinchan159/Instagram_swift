@@ -24,16 +24,6 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
         cameraView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height))
         view.addSubview(cameraView)
         
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        previewLayer?.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
         captureSession = AVCaptureSession()
         captureSession.sessionPreset = AVCaptureSessionPreset1920x1080
         
@@ -42,7 +32,7 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
         var input = AVCaptureDeviceInput()
         
         do {
-         input = try(AVCaptureDeviceInput(device: camera))
+            input = try(AVCaptureDeviceInput(device: camera))
         } catch {
             print("error")
             return
@@ -63,7 +53,14 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
                 captureSession.startRunning()
             }
         }
+        
+        previewLayer?.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
+
+
+        
     }
+    
+
     
 }
 

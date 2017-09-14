@@ -10,9 +10,18 @@ import UIKit
 
 class FeedViewController: UIViewController {
     
+    
+    var user: User!
+    var profileImage: UIImage!
     var navigationImageView: UIImageView!
     var profilePictureButton: UIButton!
     var takePictureButton: UIButton!
+    
+    var customPageViewController: CustomPageViewController!
+    
+    var newPostView: UIView!
+    var postTextView: UITextView!
+    var postButton: UIButton!
     
     
     override func viewDidLoad() {
@@ -20,38 +29,22 @@ class FeedViewController: UIViewController {
         
         view.backgroundColor = .white
         
-    
-        profilePictureButton = UIButton()
-        profilePictureButton.setImage(#imageLiteral(resourceName: "default_profile_pic"), for: .normal)
-        profilePictureButton.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
-        profilePictureButton.layer.cornerRadius = profilePictureButton.frame.width/2
-        profilePictureButton.layer.masksToBounds = true
-        profilePictureButton.addTarget(self, action: #selector(editProfilePicture), for: .touchUpInside)
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: profilePictureButton)
+        profileImage = UIImage(named: "default_profile_pic")
         
-        takePictureButton = UIButton()
-        takePictureButton.setImage(#imageLiteral(resourceName: "camera_logo"), for: .normal)
-        takePictureButton.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
-        takePictureButton.addTarget(self, action: #selector(takePicture), for: .touchUpInside)
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: takePictureButton)
-        
-        
-        
-        navigationImageView = UIImageView(image: UIImage(named: "instagram")?.withRenderingMode(.alwaysTemplate))
-        let titleView = UIView(frame: CGRect(x: 0, y: 0, width: 70, height: 44))
-        navigationImageView.frame = titleView.bounds
-        navigationImageView.tintColor = UIColor.black
-        navigationImageView.contentMode = .scaleAspectFill
-        titleView.addSubview(navigationImageView)
-        self.navigationItem.titleView = titleView
+        setupViews()
         
     }
     
     func editProfilePicture() {
         print("edit profile picture")
+        let profileImageViewController = ProfileImageViewController()
+        profileImageViewController.profileImage = profileImage
+        profileImageViewController.feedViewController = self
+        navigationController?.pushViewController(profileImageViewController, animated: true)
     }
     
     func takePicture() {
-        print("take picture")
+        //print("take picture")
+        customPageViewController.setViewControllers([customPageViewController.viewControllersArray[1]], direction: .forward, animated: true, completion: nil)
     }
 }

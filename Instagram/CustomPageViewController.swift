@@ -10,6 +10,7 @@ import UIKit
 
 class CustomPageViewController: UIPageViewController, UIPageViewControllerDataSource {
     
+    var user: User!
     var cameraViewController: CameraViewController!
     var navigationFeedController: UINavigationController!
     var viewControllersArray: [UIViewController]!
@@ -20,7 +21,10 @@ class CustomPageViewController: UIPageViewController, UIPageViewControllerDataSo
         
         
         cameraViewController = CameraViewController()
-        navigationFeedController = UINavigationController(rootViewController: FeedViewController())
+        let feedViewController = FeedViewController()
+        feedViewController.user = user
+        feedViewController.customPageViewController = self
+        navigationFeedController = UINavigationController(rootViewController: feedViewController)
         viewControllersArray = [navigationFeedController, cameraViewController]
         
         dataSource = self

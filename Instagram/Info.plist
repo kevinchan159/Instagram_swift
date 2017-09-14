@@ -29,6 +29,8 @@
 	<string>LaunchScreen</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Allow access to Camera to take pictures!</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Choose picture from Photo Library</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>

@@ -6,5 +6,7 @@ target 'Instagram' do
   use_frameworks!
 
   # Pods for Instagram
+  pod 'Firebase/Core'
   pod 'Alamofire', '~> 4.4'
+
 end

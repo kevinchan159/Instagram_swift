@@ -163,10 +163,14 @@ class LoginViewController: UIViewController {
             return
         }
         
+        
+        
+        // use default profile pic. save as "default" in PostgreSQL profile_image property
         let parameters: Parameters = [
             "name": name,
             "username": username,
-            "password": password
+            "password": password,
+            "profile_image": "default"
         ]
         
         Alamofire.request("http://localhost:3000/register", method: .post, parameters: parameters)
@@ -195,8 +199,26 @@ class LoginViewController: UIViewController {
                         alert.addAction(UIAlertAction(title: "Close", style: UIAlertActionStyle.default, handler: nil))
                         self.present(alert, animated: true, completion: nil)
                     } else {
-                        let navigationController = UINavigationController(rootViewController: FeedViewController())
-                        self.present(navigationController, animated: true, completion: nil)
+                        guard let id = JSON["userId"] as? Int, let name = JSON["userName"] as? String,
+                        let username = JSON["userUsername"] as? String, let profileImageString = JSON["profileImage"] as? String else {
+                                print(JSON["profileImage"])
+                                print("can't find user's id, name, username, and profile image")
+                                return
+                        }
+                        
+                        var profileImage: UIImage?
+                        
+                        if profileImageString == "default" {
+                            profileImage = UIImage(named: "default_profile_pic")
+                        }
+           
+                        let user = User(id: id, name: name, username: username, profileImage: profileImage)
+                        
+                        
+
+                        let customPageViewController = CustomPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
+                        customPageViewController.user = user
+                        self.present(customPageViewController, animated: true, completion: nil)
                     }
                 }
                 
