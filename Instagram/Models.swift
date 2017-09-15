@@ -23,3 +23,17 @@ class User {
     }
     
 }
+
+class Post {
+    
+    var userId: Int?
+    var text: String?
+    var time: String?
+    
+    init(userId: Int?, text: String?, time: String?) {
+        self.userId = userId
+        self.text = text
+        self.time = time
+    }
+    
+}
