@@ -8,6 +8,7 @@
 
 import UIKit
 import Alamofire
+import FirebaseAuth
 
 class LoginViewController: UIViewController {
     
@@ -29,6 +30,7 @@ class LoginViewController: UIViewController {
         
         view.backgroundColor = .white
         setupViews()
+        
         
     }
     
@@ -174,8 +176,14 @@ class LoginViewController: UIViewController {
         ]
         
         Alamofire.request("http://localhost:3000/register", method: .post, parameters: parameters)
-        
-        print("made request")
+        self.nameTextField.text = ""
+        self.usernameTextField.text = ""
+        self.passwordTextField.text = ""
+        let alert = UIAlertController(title: "Success", message: "You have registered user!", preferredStyle: .alert)
+        self.present(alert, animated: true, completion: nil)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
+            alert.dismiss(animated: true, completion: nil)
+        }))
         
         
     }
@@ -210,15 +218,45 @@ class LoginViewController: UIViewController {
                         
                         if profileImageString == "default" {
                             profileImage = UIImage(named: "default_profile_pic")
+                            let user = User(id: id, name: name, username: username, profileImage: profileImage)
+                            
+                            Auth.auth().signInAnonymously { (fireUser, err) in
+                                if (err != nil) {
+                                    print(err)
+                                    return
+                                }
+                                let customPageViewController = CustomPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
+                                customPageViewController.user = user
+                                self.present(customPageViewController, animated: true, completion: nil)
+                            }
+
+                        } else {
+                            let url = URL(string: profileImageString)
+                            let urlRequest = URLRequest(url: url!)
+                            URLSession.shared.dataTask(with: urlRequest, completionHandler: { (data, response, err) in
+                                if (err != nil) {
+                                    print(err)
+                                    return
+                                }
+                                profileImage = UIImage(data: data!)
+                                
+                                let user = User(id: id, name: name, username: username, profileImage: profileImage)
+                                
+                                Auth.auth().signInAnonymously { (fireUser, err) in
+                                    if (err != nil) {
+                                        print(err)
+                                        return
+                                    }
+                                    let customPageViewController = CustomPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
+                                    customPageViewController.user = user
+                                    self.present(customPageViewController, animated: true, completion: nil)
+                                    
+                                }
+                            }).resume()
                         }
            
-                        let user = User(id: id, name: name, username: username, profileImage: profileImage)
-                        
-                        
 
-                        let customPageViewController = CustomPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
-                        customPageViewController.user = user
-                        self.present(customPageViewController, animated: true, completion: nil)
+                        
                     }
                 }
                 

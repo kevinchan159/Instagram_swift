@@ -29,6 +29,7 @@ class CustomPageViewController: UIPageViewController, UIPageViewControllerDataSo
         cameraViewController = CameraViewController()
         cameraViewController.feedViewController = feedViewController
         friendsViewController = FriendsViewController(style: .plain)
+        friendsViewController.user = user
         let navigationFriendsController = UINavigationController(rootViewController: friendsViewController)
         viewControllersArray = [navigationFriendsController, navigationFeedController, cameraViewController]
         

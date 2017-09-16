@@ -7,6 +7,8 @@ target 'Instagram' do
 
   # Pods for Instagram
   pod 'Firebase/Core'
+  pod 'Firebase/Storage'
+  pod 'Firebase/Auth'
   pod 'Alamofire', '~> 4.4'
 
 end

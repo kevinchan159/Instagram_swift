@@ -27,13 +27,18 @@ class User {
 class Post {
     
     var userId: Int?
+    var userName: String?
     var text: String?
     var time: String?
+    var profileImage: UIImage?
     
-    init(userId: Int?, text: String?, time: String?) {
+    
+    init(userId: Int?, userName: String?, text: String?, time: String?, profileImage: UIImage?) {
         self.userId = userId
         self.text = text
         self.time = time
+        self.userName = userName
+        self.profileImage = profileImage
     }
     
 }

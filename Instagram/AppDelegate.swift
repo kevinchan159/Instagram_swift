@@ -23,9 +23,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseApp.configure()
         
         window = UIWindow()
-        let customPageViewController = CustomPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
-        window?.rootViewController = customPageViewController
-//        window?.rootViewController = LoginViewController()
+//        let user = User(id: 1, name: "Kevin Chan", username: "Kevin", profileImage: #imageLiteral(resourceName: "default_profile_pic"))
+//        let customPageViewController = CustomPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
+//        customPageViewController.user = user
+//        window?.rootViewController = customPageViewController
+        window?.rootViewController = LoginViewController()
         window?.makeKeyAndVisible()
         return true
     }

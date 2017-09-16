@@ -7,6 +7,9 @@
 //
 
 import UIKit
+import Alamofire
+import Firebase
+import FirebaseStorage
 
 class ProfileImageViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
@@ -15,6 +18,7 @@ class ProfileImageViewController: UIViewController, UIImagePickerControllerDeleg
     var profileImage: UIImage!
     var profileImageView: UIImageView!
     var choosePictureButton: UIButton!
+    var user: User!
     
     override func viewDidLoad() {
         
@@ -72,7 +76,35 @@ class ProfileImageViewController: UIViewController, UIImagePickerControllerDeleg
         
         feedViewController.profilePictureButton.setImage(profileImage, for: .normal)
         feedViewController.profileImage = profileImage
+        feedViewController.user.profileImage = profileImage
+        feedViewController.tableView.reloadData()
         
+        var imageURLString = ""
+        
+        if let imageData = UIImagePNGRepresentation(profileImage) {
+            let savedImageName = UUID().uuidString
+            let storageRef = Storage.storage().reference().child("\(savedImageName).png")
+            storageRef.putData(imageData, metadata: nil, completion: { (metadata, err) in
+                if (err != nil) {
+                    print(err)
+                    return
+                }
+                
+                if let urlString = metadata?.downloadURL()?.absoluteString {
+                    imageURLString = urlString
+                }
+                
+                let parameters = [
+                    "userId": self.user.id,
+                    "profile_image": imageURLString
+                ] as [String : Any]
+                
+                Alamofire.request("http://localhost:3000/users", method: .put, parameters: parameters).responseJSON { (response) in
+                    print("uploaded image")
+                }
+            })
+            
+        }
     }
     
 }

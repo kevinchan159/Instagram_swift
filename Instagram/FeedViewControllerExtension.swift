@@ -39,9 +39,7 @@ extension FeedViewController {
         view.addSubview(newPostView)
         
         profilePictureButton = UIButton(frame: CGRect(x: 15, y: 0, width: newPostView.frame.height*0.6, height: newPostView.frame.height*0.6))
-        //uncomment the following line!!!
-        //        profilePictureButton.setImage(user.profileImage, for: .normal)
-        profilePictureButton.setImage(#imageLiteral(resourceName: "default_profile_pic"), for: .normal)
+        profilePictureButton.setImage(user.profileImage, for: .normal)
         profilePictureButton.center = CGPoint(x: profilePictureButton.center.x, y: newPostView.frame.height/2)
         profilePictureButton.layer.cornerRadius = profilePictureButton.frame.width/2
         profilePictureButton.layer.masksToBounds = true
@@ -127,7 +125,7 @@ extension FeedViewController {
         
         tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.backgroundColor = .yellow
+        tableView.backgroundColor = .white
         view.addSubview(tableView)
         
         tableView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
@@ -139,7 +137,7 @@ extension FeedViewController {
         flowLayout.scrollDirection = .vertical
         photoCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: flowLayout)
         photoCollectionView.translatesAutoresizingMaskIntoConstraints = false
-        photoCollectionView.backgroundColor = .green
+        photoCollectionView.backgroundColor = .white
         photoCollectionView.delegate = self
         photoCollectionView.dataSource = self
         photoCollectionView.register(PhotoCell.self, forCellWithReuseIdentifier: "photoCellId")
