@@ -16,6 +16,9 @@ class PostCell: UITableViewCell {
     var timeLabel: UILabel!
     var postTextLabel: UILabel!
     
+    var likeButton: UIButton!
+    var commentButton: UIButton!
+    
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -36,13 +39,53 @@ class PostCell: UITableViewCell {
         addSubview(timeLabel)
         
         
-        postTextLabel = UILabel(frame: CGRect(x: 12, y: profileImageView.frame.origin.y + profileImageView.frame.height + 36, width: frame.width*0.9, height: frame.height - 74))
+        postTextLabel = UILabel()
+        postTextLabel.translatesAutoresizingMaskIntoConstraints = false
         postTextLabel.textAlignment = .left
         postTextLabel.font = UIFont.systemFont(ofSize: 13)
-        postTextLabel.numberOfLines = 0
+        postTextLabel.lineBreakMode = .byWordWrapping
+        postTextLabel.numberOfLines = 2
         postTextLabel.textColor = .gray
         addSubview(postTextLabel)
         
+        postTextLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 12).isActive = true
+        postTextLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12).isActive = true
+        postTextLabel.topAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: 12).isActive = true
+        postTextLabel.heightAnchor.constraint(equalTo: heightAnchor, constant: -98)
+        
+        likeButton = UIButton()
+        likeButton.translatesAutoresizingMaskIntoConstraints = false
+        likeButton.center = CGPoint(x: profileImageView.center.x, y: likeButton.center.y)
+        let heartImage = UIImage(named: "heart")?.withRenderingMode(.alwaysTemplate)
+        likeButton.setImage(heartImage, for: .normal)
+        likeButton.tintColor = .black
+        likeButton.addTarget(self, action: #selector(likedPost), for: .touchUpInside)
+        addSubview(likeButton)
+        
+        likeButton.leftAnchor.constraint(equalTo: leftAnchor, constant: profileImageView.frame.origin.x + 10).isActive = true
+        likeButton.centerYAnchor.constraint(equalTo: bottomAnchor, constant: -20).isActive = true
+        likeButton.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        likeButton.widthAnchor.constraint(equalToConstant: 20).isActive = true
+        
+        commentButton = UIButton()
+        commentButton.translatesAutoresizingMaskIntoConstraints = false
+        let commentImage = UIImage(named: "comment_icon")?.withRenderingMode(.alwaysTemplate)
+        commentButton.setImage(commentImage, for: .normal)
+        commentButton.tintColor = .black
+        addSubview(commentButton)
+        
+        commentButton.leftAnchor.constraint(equalTo: likeButton.rightAnchor, constant: 12).isActive = true
+        commentButton.centerYAnchor.constraint(equalTo: likeButton.centerYAnchor).isActive = true
+        commentButton.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        commentButton.widthAnchor.constraint(equalToConstant: 20).isActive = true
+    }
+    
+    func likedPost() {
+        if likeButton.tintColor == .black {
+            likeButton.tintColor = .red
+        } else {
+            likeButton.tintColor = .black
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {

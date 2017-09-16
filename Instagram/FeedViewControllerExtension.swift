@@ -64,6 +64,67 @@ extension FeedViewController {
         postButton.addTarget(self, action: #selector(makePost), for: .touchUpInside)
         newPostView.addSubview(postButton)
         
+        buttonRowView = UIView()
+        buttonRowView.translatesAutoresizingMaskIntoConstraints = false
+        buttonRowView.backgroundColor = .white
+        view.addSubview(buttonRowView)
+        
+        buttonRowView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        buttonRowView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        buttonRowView.topAnchor.constraint(equalTo: newPostView.bottomAnchor).isActive = true
+        buttonRowView.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        
+        
+        let separatorView = UIView()
+        separatorView.translatesAutoresizingMaskIntoConstraints = false
+        separatorView.backgroundColor = UIColor.lightGray
+        buttonRowView.addSubview(separatorView)
+        
+        separatorView.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
+        separatorView.heightAnchor.constraint(equalToConstant: 1).isActive = true
+        separatorView.topAnchor.constraint(equalTo: buttonRowView.topAnchor).isActive = true
+        
+        let separator2View = UIView()
+        separator2View.translatesAutoresizingMaskIntoConstraints = false
+        separator2View.backgroundColor = UIColor.lightGray
+        buttonRowView.addSubview(separator2View)
+        
+        separator2View.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
+        separator2View.heightAnchor.constraint(equalToConstant: 1).isActive = true
+        separator2View.bottomAnchor.constraint(equalTo: buttonRowView.bottomAnchor).isActive = true
+
+        
+        
+        feedButton = UIButton()
+        feedButton.translatesAutoresizingMaskIntoConstraints = false
+        let feedImage = UIImage(named: "list_icon")?.withRenderingMode(.alwaysTemplate)
+        feedButton.setImage(feedImage, for: .normal)
+        feedButton.tintColor = .blue
+        feedButton.addTarget(self, action: #selector(showFeed), for: .touchUpInside)
+        buttonRowView.addSubview(feedButton)
+        
+        feedButton.centerXAnchor.constraint(equalTo: view.leftAnchor, constant: view.frame.width*0.25).isActive = true
+        feedButton.centerYAnchor.constraint(equalTo: buttonRowView.topAnchor, constant: 25).isActive = true
+        feedButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
+        feedButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        
+        
+        
+        photosButton = UIButton()
+        photosButton.translatesAutoresizingMaskIntoConstraints = false
+        let photoImage = UIImage(named: "photoes")?.withRenderingMode(.alwaysTemplate)
+        photosButton.setImage(photoImage, for: .normal)
+        photosButton.tintColor = .lightGray
+        photosButton.addTarget(self, action: #selector(showPhotos), for: .touchUpInside)
+        buttonRowView.addSubview(photosButton)
+        
+        photosButton.centerXAnchor.constraint(equalTo: view.leftAnchor, constant: view.frame.width*0.75).isActive = true
+        photosButton.centerYAnchor.constraint(equalTo: feedButton.centerYAnchor).isActive = true
+        photosButton.widthAnchor.constraint(equalTo: feedButton.widthAnchor).isActive = true
+        photosButton.heightAnchor.constraint(equalTo: feedButton.heightAnchor).isActive = true
+        
+        
+        
         tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.backgroundColor = .yellow
@@ -71,10 +132,48 @@ extension FeedViewController {
         
         tableView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         tableView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        tableView.topAnchor.constraint(equalTo: newPostView.bottomAnchor).isActive = true
+        tableView.topAnchor.constraint(equalTo: buttonRowView.bottomAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        
+        let flowLayout = UICollectionViewFlowLayout()
+        flowLayout.scrollDirection = .vertical
+        photoCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: flowLayout)
+        photoCollectionView.translatesAutoresizingMaskIntoConstraints = false
+        photoCollectionView.backgroundColor = .green
+        photoCollectionView.delegate = self
+        photoCollectionView.dataSource = self
+        photoCollectionView.register(PhotoCell.self, forCellWithReuseIdentifier: "photoCellId")
+        view.addSubview(photoCollectionView)
+        
+        photoCollectionView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        photoCollectionView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        photoCollectionView.topAnchor.constraint(equalTo: buttonRowView.bottomAnchor).isActive = true
+        photoCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        
+        photoCollectionView.alpha = 0
     }
     
+    func showFeed() {
+        if feedButton.tintColor == .blue {
+            return
+        } else {
+            feedButton.tintColor = .blue
+            photosButton.tintColor = .lightGray
+            tableView.alpha = 1
+            photoCollectionView.alpha = 0
+        }
+    }
+    
+    func showPhotos() {
+        if photosButton.tintColor == .blue {
+            return
+        } else {
+            photosButton.tintColor = .blue
+            feedButton.tintColor = .lightGray
+            tableView.alpha = 0
+            photoCollectionView.alpha = 1
+        }
+    }
     
     
     

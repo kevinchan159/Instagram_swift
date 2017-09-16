@@ -13,6 +13,7 @@ class CustomPageViewController: UIPageViewController, UIPageViewControllerDataSo
     var user: User!
     var cameraViewController: CameraViewController!
     var navigationFeedController: UINavigationController!
+    var friendsViewController: FriendsViewController!
     var viewControllersArray: [UIViewController]!
     
     override func viewDidLoad() {
@@ -20,16 +21,20 @@ class CustomPageViewController: UIPageViewController, UIPageViewControllerDataSo
         
         
         
-        cameraViewController = CameraViewController()
+
         let feedViewController = FeedViewController()
         feedViewController.user = user
         feedViewController.customPageViewController = self
         navigationFeedController = UINavigationController(rootViewController: feedViewController)
-        viewControllersArray = [navigationFeedController, cameraViewController]
+        cameraViewController = CameraViewController()
+        cameraViewController.feedViewController = feedViewController
+        friendsViewController = FriendsViewController(style: .plain)
+        let navigationFriendsController = UINavigationController(rootViewController: friendsViewController)
+        viewControllersArray = [navigationFriendsController, navigationFeedController, cameraViewController]
         
         dataSource = self
         
-        setViewControllers([viewControllersArray[0]], direction: .forward, animated: true, completion: nil)
+        setViewControllers([viewControllersArray[1]], direction: .forward, animated: true, completion: nil)
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
@@ -37,17 +42,17 @@ class CustomPageViewController: UIPageViewController, UIPageViewControllerDataSo
         if currentViewControllerIndex == 0 {
             return nil
         } else {
-            currentViewControllerIndex = 0
+            currentViewControllerIndex = currentViewControllerIndex! - 1
         }
         return viewControllersArray[currentViewControllerIndex!]
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
         var currentViewControllerIndex = viewControllersArray.index(of: viewController)
-        if currentViewControllerIndex == 0 {
-            currentViewControllerIndex = 1
-        } else {
+        if currentViewControllerIndex == 2 {
             return nil
+        } else {
+            currentViewControllerIndex = currentViewControllerIndex! + 1
         }
         return viewControllersArray[currentViewControllerIndex!]
     }
