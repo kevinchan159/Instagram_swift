@@ -8,33 +8,37 @@
 
 import UIKit
 
-class FriendCell: UITableViewCell {
+class FriendCell: UICollectionViewCell {
     
     var profileImageView: UIImageView!
     var nameLabel: UILabel!
     var usernameLabel: UILabel!
     
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         
         setupViews()
     }
     
+    
     func setupViews() {
-        profileImageView = UIImageView(frame: CGRect(x: 12, y: 0, width: 50, height: 50))
-        profileImageView.center = CGPoint(x: profileImageView.center.x, y: 75/2)
+        profileImageView = UIImageView(frame: CGRect(x: 3, y: 0, width: frame.width*0.6, height: frame.width*0.6))
+        profileImageView.center = CGPoint(x: frame.width/2, y: profileImageView.center.y)
         profileImageView.layer.cornerRadius = profileImageView.frame.width/2
         profileImageView.layer.masksToBounds = true
         profileImageView.contentMode = .scaleAspectFill
         addSubview(profileImageView)
-        
-        nameLabel = UILabel(frame: CGRect(x: profileImageView.frame.origin.x + profileImageView.frame.width + 12, y: profileImageView.frame.origin.y, width: frame.width*0.5, height: 25))
+                
+        nameLabel = UILabel(frame: CGRect(x: 0, y: profileImageView.frame.origin.y + profileImageView.frame.height + 5, width: frame.width*0.9, height: 25))
+        nameLabel.center = CGPoint(x: frame.width/2, y: nameLabel.center.y)
+        nameLabel.textAlignment = .center
         nameLabel.font = UIFont.systemFont(ofSize: 16)
         nameLabel.textColor = .black
         addSubview(nameLabel)
         
-        usernameLabel = UILabel(frame: CGRect(x: nameLabel.frame.origin.x, y: nameLabel.frame.origin.y + nameLabel.frame.height
-            , width: frame.width*0.5, height: 25))
+        usernameLabel = UILabel(frame: CGRect(x: 0, y: nameLabel.frame.origin.y + nameLabel.frame.height + 5, width: frame.width*0.9, height: 25))
+        usernameLabel.center = CGPoint(x: frame.width/2, y: usernameLabel.center.y)
+        usernameLabel.textAlignment = .center
         usernameLabel.font = UIFont.systemFont(ofSize: 13)
         usernameLabel.textColor = .lightGray
         addSubview(usernameLabel)

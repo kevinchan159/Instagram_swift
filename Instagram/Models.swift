@@ -42,3 +42,19 @@ class Post {
     }
     
 }
+
+class Comment {
+    
+    var user: User?
+    var text: String?
+    var profileImage: UIImage?
+    var time: String?
+    
+    init(user: User?, text: String?, profileImage: UIImage?, time: String?) {
+        self.user = user
+        self.text = text
+        self.profileImage = profileImage
+        self.time = time
+    }
+    
+}

@@ -9,7 +9,7 @@
 import UIKit
 import Alamofire
 
-class FriendsViewController: UITableViewController {
+class FriendsViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
     var user: User! {
         didSet {
@@ -18,32 +18,39 @@ class FriendsViewController: UITableViewController {
     }
     var usersArray: [User] = [User]()
     
-    override init(style: UITableViewStyle) {
-        super.init(style: style)
+    override init(collectionViewLayout layout: UICollectionViewLayout) {
+        super.init(collectionViewLayout: layout)
         
         self.title = "Other Users"
         view.backgroundColor = .white
         
-        tableView.register(FriendCell.self, forCellReuseIdentifier: "friendCellId")
+        collectionView?.register(FriendCell.self, forCellWithReuseIdentifier: "friendCellId")
+        //collectionView?.frame = CGRect(x: 0, y: 32, width: view.frame.width, height: view.frame.height-64)
+        collectionView?.backgroundColor = .white
         
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "friendCellId") as! FriendCell
+    
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "friendCellId", for: indexPath) as! FriendCell
         let user = usersArray[indexPath.row]
         cell.nameLabel.text = user.name
         cell.usernameLabel.text = user.username
         cell.profileImageView.image = user.profileImage
         return cell
     }
+
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return usersArray.count
     }
     
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 75
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: view.frame.width*0.47, height: 200)
     }
+    
+    
+    
     
     func fillUsersArray() {
         let parameters = [
@@ -62,9 +69,10 @@ class FriendsViewController: UITableViewController {
                     if profileImageString == "default" {
                         let user = User(id: id, name: name, username: username, profileImage: #imageLiteral(resourceName: "default_profile_pic"))
                         DispatchQueue.main.async {
-                            self.usersArray.append(user)
-                            let indexPath = IndexPath(row: self.usersArray.count, section: 0)
-                            self.tableView.insertRows(at: [indexPath], with: .left)
+                            self.usersArray.insert(user, at: 0)
+//                            let indexPath = IndexPath(item: 0, section: 0)
+//                            self.collectionView?.insertItems(at: [indexPath])
+                            self.collectionView?.reloadData()
                         }
                     } else {
                         let url = URL(string: profileImageString!)
@@ -77,9 +85,10 @@ class FriendsViewController: UITableViewController {
                             let image = UIImage(data: data!)
                             let user = User(id: id, name: name, username: username, profileImage: image)
                             DispatchQueue.main.async {
-                                self.usersArray.append(user)
-                                let indexPath = IndexPath(row: self.usersArray.count, section: 0)
-                                self.tableView.insertRows(at: [indexPath], with: .left)
+                                self.usersArray.insert(user, at: 0)
+//                                let indexPath = IndexPath(item: 0, section: 0)
+//                                self.collectionView?.insertItems(at: [indexPath])
+                                self.collectionView?.reloadData()
                             }
                         }).resume()
                     }

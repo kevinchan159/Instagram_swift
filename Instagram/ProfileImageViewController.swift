@@ -59,10 +59,8 @@ class ProfileImageViewController: UIViewController, UIImagePickerControllerDeleg
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let image = info[UIImagePickerControllerEditedImage] as? UIImage {
             profileImageView.image = image
-            profileImage = image
         } else if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
             profileImageView.image = image
-            profileImage = image
         } else {
             print("photo selection failed")
             return
@@ -74,36 +72,37 @@ class ProfileImageViewController: UIViewController, UIImagePickerControllerDeleg
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        feedViewController.profilePictureButton.setImage(profileImage, for: .normal)
-        feedViewController.profileImage = profileImage
-        feedViewController.user.profileImage = profileImage
-        feedViewController.tableView.reloadData()
-        
-        var imageURLString = ""
-        
-        if let imageData = UIImagePNGRepresentation(profileImage) {
-            let savedImageName = UUID().uuidString
-            let storageRef = Storage.storage().reference().child("\(savedImageName).png")
-            storageRef.putData(imageData, metadata: nil, completion: { (metadata, err) in
-                if (err != nil) {
-                    print(err)
-                    return
-                }
-                
-                if let urlString = metadata?.downloadURL()?.absoluteString {
-                    imageURLString = urlString
-                }
-                
-                let parameters = [
-                    "userId": self.user.id,
-                    "profile_image": imageURLString
-                ] as [String : Any]
-                
-                Alamofire.request("http://localhost:3000/users", method: .put, parameters: parameters).responseJSON { (response) in
-                    print("uploaded image")
-                }
-            })
+        if profileImageView.image != profileImage {
+            feedViewController.profilePictureButton.setImage(profileImageView.image, for: .normal)
+            feedViewController.user.profileImage = profileImageView.image
+            feedViewController.tableView.reloadData()
             
+            var imageURLString = ""
+            
+            if let imageData = UIImagePNGRepresentation(profileImage) {
+                let savedImageName = UUID().uuidString
+                let storageRef = Storage.storage().reference().child("\(savedImageName).png")
+                storageRef.putData(imageData, metadata: nil, completion: { (metadata, err) in
+                    if (err != nil) {
+                        print(err)
+                        return
+                    }
+                    
+                    if let urlString = metadata?.downloadURL()?.absoluteString {
+                        imageURLString = urlString
+                    }
+                    
+                    let parameters = [
+                        "userId": self.user.id,
+                        "profile_image": imageURLString
+                        ] as [String : Any]
+                    
+                    Alamofire.request("http://localhost:3000/users", method: .put, parameters: parameters).responseJSON { (response) in
+                        print("uploaded image")
+                    }
+                })
+                
+            }
         }
     }
     

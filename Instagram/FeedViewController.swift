@@ -81,7 +81,8 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let postCell = tableView.cellForRow(at: indexPath) as! PostCell
         let commentsViewController = CommentsViewController()
-        commentsViewController.userId = postCell.userId
+        commentsViewController.user = user
+        commentsViewController.postUserId = postCell.userId
         commentsViewController.profileImage = postCell.profileImageView.image
         commentsViewController.name = postCell.nameLabel.text
         commentsViewController.timeString = postCell.timeLabel.text
@@ -133,7 +134,7 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     func editProfilePicture() {
         print("edit profile picture")
         let profileImageViewController = ProfileImageViewController()
-        profileImageViewController.profileImage = profileImage
+        profileImageViewController.profileImage = user.profileImage
         profileImageViewController.feedViewController = self
         profileImageViewController.user = user
         navigationController?.pushViewController(profileImageViewController, animated: true)

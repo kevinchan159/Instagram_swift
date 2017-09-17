@@ -14,13 +14,14 @@
 		C23720041F66D6F800A09094 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23720031F66D6F800A09094 /* Models.swift */; };
 		C248A4A81F6DAE4600C6B621 /* FriendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C248A4A71F6DAE4600C6B621 /* FriendCell.swift */; };
 		C248A4AA1F6DBE9A00C6B621 /* CommentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C248A4A91F6DBE9A00C6B621 /* CommentsViewController.swift */; };
+		C248A4AC1F6DC6B700C6B621 /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C248A4AB1F6DC6B700C6B621 /* CommentCell.swift */; };
+		C248A4AE1F6E1E9E00C6B621 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C248A4AD1F6E1E9E00C6B621 /* GoogleService-Info.plist */; };
 		C28C36CC1F565E28004BCA5A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C28C36CB1F565E28004BCA5A /* AppDelegate.swift */; };
 		C28C36D41F565E28004BCA5A /* Instagram.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C28C36D21F565E28004BCA5A /* Instagram.xcdatamodeld */; };
 		C28C36D61F565E28004BCA5A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C28C36D51F565E28004BCA5A /* Assets.xcassets */; };
 		C28C36D91F565E28004BCA5A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C28C36D71F565E28004BCA5A /* LaunchScreen.storyboard */; };
 		C28C36E11F565E45004BCA5A /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C28C36E01F565E45004BCA5A /* LoginViewController.swift */; };
 		C2BEC9261F66243A009458FB /* ProfileImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BEC9251F66243A009458FB /* ProfileImageViewController.swift */; };
-		C2F053A31F68408100A960FE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C2F053A21F68408100A960FE /* GoogleService-Info.plist */; };
 		C2F053A51F6ADEB800A960FE /* FeedViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F053A41F6ADEB800A960FE /* FeedViewControllerExtension.swift */; };
 		C2F053A71F6B52F400A960FE /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F053A61F6B52F400A960FE /* PostCell.swift */; };
 		C2F053A91F6CC39200A960FE /* PhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F053A81F6CC39200A960FE /* PhotoCell.swift */; };
@@ -35,6 +36,8 @@
 		C23720031F66D6F800A09094 /* Models.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		C248A4A71F6DAE4600C6B621 /* FriendCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendCell.swift; sourceTree = "<group>"; };
 		C248A4A91F6DBE9A00C6B621 /* CommentsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentsViewController.swift; sourceTree = "<group>"; };
+		C248A4AB1F6DC6B700C6B621 /* CommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
+		C248A4AD1F6E1E9E00C6B621 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C28C36C81F565E28004BCA5A /* Instagram.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Instagram.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C28C36CB1F565E28004BCA5A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C28C36D31F565E28004BCA5A /* Instagram.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Instagram.xcdatamodel; sourceTree = "<group>"; };
@@ -43,7 +46,6 @@
 		C28C36DA1F565E28004BCA5A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C28C36E01F565E45004BCA5A /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		C2BEC9251F66243A009458FB /* ProfileImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileImageViewController.swift; sourceTree = "<group>"; };
-		C2F053A21F68408100A960FE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C2F053A41F6ADEB800A960FE /* FeedViewControllerExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedViewControllerExtension.swift; sourceTree = "<group>"; };
 		C2F053A61F6B52F400A960FE /* PostCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostCell.swift; sourceTree = "<group>"; };
 		C2F053A81F6CC39200A960FE /* PhotoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoCell.swift; sourceTree = "<group>"; };
@@ -87,6 +89,7 @@
 			children = (
 				C28C36CB1F565E28004BCA5A /* AppDelegate.swift */,
 				C248A4A91F6DBE9A00C6B621 /* CommentsViewController.swift */,
+				C248A4AB1F6DC6B700C6B621 /* CommentCell.swift */,
 				C28C36E01F565E45004BCA5A /* LoginViewController.swift */,
 				C2284A0A1F5BB33200B0DBBE /* FeedViewController.swift */,
 				C2F053A41F6ADEB800A960FE /* FeedViewControllerExtension.swift */,
@@ -101,7 +104,7 @@
 				C28C36D51F565E28004BCA5A /* Assets.xcassets */,
 				C28C36D71F565E28004BCA5A /* LaunchScreen.storyboard */,
 				C28C36DA1F565E28004BCA5A /* Info.plist */,
-				C2F053A21F68408100A960FE /* GoogleService-Info.plist */,
+				C248A4AD1F6E1E9E00C6B621 /* GoogleService-Info.plist */,
 				C28C36D21F565E28004BCA5A /* Instagram.xcdatamodeld */,
 			);
 			path = Instagram;
@@ -189,7 +192,7 @@
 			files = (
 				C28C36D91F565E28004BCA5A /* LaunchScreen.storyboard in Resources */,
 				C28C36D61F565E28004BCA5A /* Assets.xcassets in Resources */,
-				C2F053A31F68408100A960FE /* GoogleService-Info.plist in Resources */,
+				C248A4AE1F6E1E9E00C6B621 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -263,6 +266,7 @@
 				C248A4AA1F6DBE9A00C6B621 /* CommentsViewController.swift in Sources */,
 				C2284A0B1F5BB33200B0DBBE /* FeedViewController.swift in Sources */,
 				C23720041F66D6F800A09094 /* Models.swift in Sources */,
+				C248A4AC1F6DC6B700C6B621 /* CommentCell.swift in Sources */,
 				C2F053AB1F6CC63F00A960FE /* FriendsViewController.swift in Sources */,
 				C2F053A51F6ADEB800A960FE /* FeedViewControllerExtension.swift in Sources */,
 				C2284A0D1F5BC19800B0DBBE /* CustomPageViewController.swift in Sources */,

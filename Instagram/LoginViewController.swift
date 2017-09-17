@@ -133,7 +133,7 @@ class LoginViewController: UIViewController {
         loginButton.setTitle("Login", for: .normal)
         loginButton.setTitleColor(.white, for: .normal)
         loginButton.layer.cornerRadius = 5
-        loginButton.backgroundColor = UIColor(red: 82/255, green: 179/255, blue: 217/255, alpha: 1)
+        loginButton.backgroundColor = UIColor.init(red: 252/255, green: 204/255, blue: 99/255, alpha: 1)
         loginButton.addTarget(self, action: #selector(loginUser), for: .touchUpInside)
         view.addSubview(loginButton)
         
@@ -147,7 +147,7 @@ class LoginViewController: UIViewController {
         registerButton.setTitle("Register", for: .normal)
         registerButton.setTitleColor(.white, for: .normal)
         registerButton.layer.cornerRadius = 5
-        registerButton.backgroundColor = UIColor(red: 82/255, green: 179/255, blue: 217/255, alpha: 1)
+        registerButton.backgroundColor = UIColor.init(red: 252/255, green: 204/255, blue: 99/255, alpha: 1)
         registerButton.addTarget(self, action: #selector(registerUser), for: .touchUpInside)
         view.addSubview(registerButton)
         

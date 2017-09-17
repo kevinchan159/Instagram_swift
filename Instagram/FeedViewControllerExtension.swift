@@ -50,15 +50,14 @@ extension FeedViewController {
         postTextView.layer.cornerRadius = 9
         postTextView.textContainerInset = UIEdgeInsetsMake(10, 10, 0, 0)
         postTextView.layer.borderWidth = 1
-        postTextView.layer.borderColor = UIColor.gray.cgColor
+        postTextView.layer.borderColor = UIColor(red: 236/255, green: 240/255, blue: 241/255, alpha: 1.0).cgColor
         newPostView.addSubview(postTextView)
         
         postButton = UIButton(frame: CGRect(x: postTextView.frame.origin.x, y: postTextView.frame.origin.y + postTextView.frame.height + 5, width: postTextView.frame.width, height: view.frame.height*0.05))
         postButton.setTitle("Post", for: .normal)
-        postButton.setTitleColor(.black, for: .normal)
+        postButton.setTitleColor(.white, for: .normal)
         postButton.layer.cornerRadius = 9
-        postButton.layer.borderWidth = 1
-        postButton.layer.borderColor = UIColor.gray.cgColor
+        postButton.backgroundColor = UIColor(red: 108/255, green: 122/255, blue: 137/255, alpha: 1.0)
         postButton.addTarget(self, action: #selector(makePost), for: .touchUpInside)
         newPostView.addSubview(postButton)
         
@@ -75,7 +74,7 @@ extension FeedViewController {
         
         let separatorView = UIView()
         separatorView.translatesAutoresizingMaskIntoConstraints = false
-        separatorView.backgroundColor = UIColor.lightGray
+        separatorView.backgroundColor = UIColor(red: 236/255, green: 240/255, blue: 241/255, alpha: 1.0)
         buttonRowView.addSubview(separatorView)
         
         separatorView.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
@@ -84,7 +83,7 @@ extension FeedViewController {
         
         let separator2View = UIView()
         separator2View.translatesAutoresizingMaskIntoConstraints = false
-        separator2View.backgroundColor = UIColor.lightGray
+        separator2View.backgroundColor = UIColor(red: 236/255, green: 240/255, blue: 241/255, alpha: 1.0)
         buttonRowView.addSubview(separator2View)
         
         separator2View.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
@@ -95,9 +94,10 @@ extension FeedViewController {
         
         feedButton = UIButton()
         feedButton.translatesAutoresizingMaskIntoConstraints = false
-        let feedImage = UIImage(named: "list_icon")?.withRenderingMode(.alwaysTemplate)
+        let feedImage = UIImage(named: "news_feed")?.withRenderingMode(.alwaysTemplate)
         feedButton.setImage(feedImage, for: .normal)
-        feedButton.tintColor = .blue
+        feedButton.contentMode = .scaleAspectFill
+        feedButton.tintColor = UIColor(red: 25/255, green: 181/255, blue: 254/255, alpha: 1.0)
         feedButton.addTarget(self, action: #selector(showFeed), for: .touchUpInside)
         buttonRowView.addSubview(feedButton)
         
@@ -120,7 +120,6 @@ extension FeedViewController {
         photosButton.centerYAnchor.constraint(equalTo: feedButton.centerYAnchor).isActive = true
         photosButton.widthAnchor.constraint(equalTo: feedButton.widthAnchor).isActive = true
         photosButton.heightAnchor.constraint(equalTo: feedButton.heightAnchor).isActive = true
-        
         
         
         tableView = UITableView()
@@ -152,10 +151,10 @@ extension FeedViewController {
     }
     
     func showFeed() {
-        if feedButton.tintColor == .blue {
+        if feedButton.tintColor == UIColor(red: 25/255, green: 181/255, blue: 254/255, alpha: 1.0) {
             return
         } else {
-            feedButton.tintColor = .blue
+            feedButton.tintColor = UIColor(red: 25/255, green: 181/255, blue: 254/255, alpha: 1.0)
             photosButton.tintColor = .lightGray
             tableView.alpha = 1
             photoCollectionView.alpha = 0
@@ -163,10 +162,10 @@ extension FeedViewController {
     }
     
     func showPhotos() {
-        if photosButton.tintColor == .blue {
+        if photosButton.tintColor == UIColor(red: 25/255, green: 181/255, blue: 254/255, alpha: 1.0) {
             return
         } else {
-            photosButton.tintColor = .blue
+            photosButton.tintColor = UIColor(red: 25/255, green: 181/255, blue: 254/255, alpha: 1.0)
             feedButton.tintColor = .lightGray
             tableView.alpha = 0
             photoCollectionView.alpha = 1
