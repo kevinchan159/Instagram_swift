@@ -11,6 +11,7 @@ import UIKit
 class PostCell: UITableViewCell {
     
     var userId: Int!
+    var postId: Int!
     var profileImageView: UIImageView!
     var nameLabel: UILabel!
     var timeLabel: UILabel!
@@ -81,10 +82,10 @@ class PostCell: UITableViewCell {
     }
     
     func likedPost() {
-        if likeButton.tintColor == .black {
-            likeButton.tintColor = .red
+        if likeButton.image(for: .normal) == #imageLiteral(resourceName: "heart") {
+            likeButton.setImage(#imageLiteral(resourceName: "heart_red"), for: .normal)
         } else {
-            likeButton.tintColor = .black
+            likeButton.setImage(#imageLiteral(resourceName: "heart"), for: .normal)
         }
     }
     

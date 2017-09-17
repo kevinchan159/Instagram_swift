@@ -57,6 +57,7 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "postCellId") as! PostCell
         let post = postsArray[indexPath.row]
+        cell.postId = post.id
         cell.userId = post.userId
         cell.profileImageView.image = post.profileImage
         cell.nameLabel.text = post.userName
@@ -82,6 +83,7 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         let postCell = tableView.cellForRow(at: indexPath) as! PostCell
         let commentsViewController = CommentsViewController()
         commentsViewController.user = user
+        commentsViewController.postId = postCell.postId
         commentsViewController.postUserId = postCell.userId
         commentsViewController.profileImage = postCell.profileImageView.image
         commentsViewController.name = postCell.nameLabel.text
@@ -128,7 +130,14 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
             "text": postTextView.text
         ] as [String : Any]
         postTextView.text = ""
-        Alamofire.request("http://localhost:3000/posts", method: .post, parameters: parameters)
+        Alamofire.request("http://localhost:3000/posts", method: .post, parameters: parameters).responseJSON { (response) in
+            print(response)
+            if let JSON = response.result.value as? [[String:Any]] {
+                let dict = JSON[0] as [String:Any]
+                post.id = dict["id"] as? Int
+                //print(post.id)
+            }
+        }
     }
     
     func editProfilePicture() {
@@ -145,9 +154,6 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func viewFriends() {
-//        for i in 0...postsArray.count-1 {
-//            print(postsArray[i].text)
-//        }
         customPageViewController.setViewControllers([customPageViewController.viewControllersArray[0]], direction: .reverse, animated: true, completion: nil)
     }
     
@@ -157,24 +163,16 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
             if let JSON = response.result.value as? [[String: Any]] {
                 // print(JSON)
                 for i in 0...(JSON.count - 1) {
-                    //print(JSON[i]["id"])
+                    print(JSON[i])
                     let post = JSON[i]
+                    let id = post["id"] as? Int
                     let created_at = post["created_at"] as! String
                     let startIndex = created_at.index(created_at.startIndex, offsetBy: 11)
                     let endIndex = created_at.index(created_at.startIndex, offsetBy: 16)
                     let timeString = created_at.substring(with: Range<String.Index>(uncheckedBounds: (lower: startIndex, upper: endIndex)))
-                    let parsedTime = self.parseTime(time: timeString)
+                    let parsedTime = parseTime(time: timeString)
                     var userProfileImage: UIImage!
-//                    if let image = self.idToProfileImage[(post["user_id"] as? Int)!] {
-//                        userProfileImage = image
-                    //                        let newPost = Post(userId: post["user_id"] as? Int, userName: post["username"] as! String, text: post["text"] as! String, time: parsedTime, profileImage: userProfileImage)
-                    //                        DispatchQueue.main.async {
-                    //                            self.postsArray.insert(newPost, at: 0)
-                    //                            //                                let indexPath = IndexPath(row: 0, section: 0)
-                    //                            //                                self.tableView.insertRows(at: [indexPath], with: .left)
-                    //                            self.tableView.reloadData()
-                    //                        }
-                    //                    } else {
+                    
                     let parameters = [
                         "user_id": post["user_id"]
                     ]
@@ -185,6 +183,7 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
                             if profileImageURLString == "default" {
                                 userProfileImage = #imageLiteral(resourceName: "default_profile_pic")
                                 let newPost = Post(userId: post["user_id"] as? Int, userName: post["username"] as! String, text: post["text"] as! String, time: parsedTime, profileImage: userProfileImage)
+                                newPost.id = id
                                 self.idToProfileImage[post["user_id"] as! Int] = userProfileImage
                                 DispatchQueue.main.async {
                                     self.postsArray.insert(newPost, at: 0)
@@ -203,6 +202,7 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
                                     }
                                     userProfileImage = UIImage(data: data!)
                                     let newPost = Post(userId: post["user_id"] as? Int, userName: post["username"] as! String, text: post["text"] as! String, time: parsedTime, profileImage: userProfileImage)
+                                    newPost.id = id
                                     self.idToProfileImage[post["user_id"] as! Int] = userProfileImage
                                     DispatchQueue.main.async {
                                         //print(newPost.text)
@@ -225,20 +225,5 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     
-    // Converts time from created_at column to time like "10:30 PM"
-    func parseTime(time: String) -> String {
-        let hourIndex = time.index(time.startIndex, offsetBy: 2)
-        let hour: Int = Int(time.substring(to: hourIndex))!
-        var correctedHour = (hour + 20) % 24
-        if correctedHour > 12 {
-            correctedHour = correctedHour - 12
-            return "\(correctedHour)" + time.substring(from: hourIndex) + " PM"
-        } else if correctedHour == 12 {
-            return "\(correctedHour)" + time.substring(from: hourIndex) + " PM"
-        } else {
-            return "\(correctedHour)" + time.substring(from: hourIndex) + " AM"
-        }
-        
-        
-    }
+    
 }

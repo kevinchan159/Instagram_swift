@@ -7,12 +7,14 @@
 //
 
 import UIKit
+import Alamofire
 
 class CommentsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     var postView: UIView!
     
     var user: User!
+    var postId: Int!
     var postUserId: Int!
     var profileImage: UIImage!
     var name: String!
@@ -42,101 +44,23 @@ class CommentsViewController: UIViewController, UITableViewDelegate, UITableView
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: view.window)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: view.window)
         
-        commentsArray.append(Comment(user: user, text: "First comment", profileImage: user.profileImage, time: "10:02 PM"))
-        commentsArray.append(Comment(user: user, text: "This is going to be a really long string that goes over one line. Abcdefgh ijklmnop qrs", profileImage: user.profileImage, time: "10:05 PM"))
+//        commentsArray.append(Comment(user: user, text: "First comment", profileImage: user.profileImage, time: "10:02 PM"))
+//        commentsArray.append(Comment(user: user, text: "This is going to be a really long string that goes over one line. Abcdefgh ijklmnop qrs", profileImage: user.profileImage, time: "10:05 PM"))
         
-        postView = UIView(frame: CGRect(x: 0, y: 64, width: view.frame.width, height: view.frame.height*0.2))
-        postView.backgroundColor = .white
-        view.addSubview(postView)
-        
-        profileImageView = UIImageView(frame: CGRect(x: 24, y: 24, width: 50, height: 50))
-        profileImageView.image = profileImage
-        profileImageView.layer.cornerRadius = profileImageView.frame.width/2
-        profileImageView.layer.masksToBounds = true
-        postView.addSubview(profileImageView)
-        
-        nameLabel = UILabel(frame: CGRect(x: profileImageView.frame.origin.x + profileImageView.frame.width + 10, y: profileImageView.frame.origin.y, width: view.frame.width*0.75, height: 25))
-        nameLabel.text = name
-        nameLabel.font = UIFont.boldSystemFont(ofSize: 16)
-        nameLabel.textAlignment = .left
-        postView.addSubview(nameLabel)
-        
-        timeLabel = UILabel(frame: CGRect(x: nameLabel.frame.origin.x, y: nameLabel.frame.origin.y + nameLabel.frame.height, width: nameLabel.frame.width, height: nameLabel.frame.height))
-        timeLabel.text = timeString
-        timeLabel.font = UIFont.systemFont(ofSize: 13)
-        timeLabel.textAlignment = .left
-        postView.addSubview(timeLabel)
-        
-        
-        postTextLabel = UILabel()
-        postTextLabel.translatesAutoresizingMaskIntoConstraints = false
-        postTextLabel.text = postText
-        postTextLabel.textAlignment = .left
-        postTextLabel.font = UIFont.systemFont(ofSize: 13)
-        postTextLabel.lineBreakMode = .byWordWrapping
-        postTextLabel.numberOfLines = 2
-        postTextLabel.textColor = .gray
-        postView.addSubview(postTextLabel)
-        
-        postTextLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12).isActive = true
-        postTextLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -12).isActive = true
-        postTextLabel.topAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: 12).isActive = true
-        postTextLabel.heightAnchor.constraint(equalTo: view.heightAnchor, constant: -98)
-        
-        
-        let separatorView = UIView(frame: CGRect(x: 12, y: postView.frame.origin.y + postView.frame.height-1, width: view.frame.width-24, height: 1))
-        separatorView.backgroundColor = UIColor(red: 236/255, green: 240/255, blue: 241/255, alpha: 1.0)
-        view.addSubview(separatorView)
-        
-        commentsTableView = UITableView(frame: CGRect(x: 0, y: postView.frame.origin.y + postView.frame.height, width: view.frame.width, height: view.frame.height - postView.frame.origin.y - postView.frame.height - 64))
-        commentsTableView.separatorColor = .white
-        commentsTableView.delegate = self
-        commentsTableView.dataSource = self
-        commentsTableView.register(CommentCell.self, forCellReuseIdentifier: "commentCellId")
-        view.addSubview(commentsTableView)
-        
-//        newCommentView = UIView(frame: CGRect(x: 0, y: commentsTableView.frame.origin.y + commentsTableView.frame.height, width: view.frame.width, height: 64))
-        newCommentView = UIView()
-        newCommentView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(newCommentView)
-        view.bringSubview(toFront: newCommentView)
-        
-        //newCommentView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        bottomConstraint = NSLayoutConstraint(item: newCommentView, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: 0)
-        view.addConstraint(bottomConstraint)
-        newCommentView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-        newCommentView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        newCommentView.heightAnchor.constraint(equalToConstant: 64).isActive = true
-        
-        
-        airplaneImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 24, height: 24))
-        airplaneImageView.center = CGPoint(x: view.frame.width*0.05, y: 32)
-        airplaneImageView.image = UIImage(named: "airplane")?.withRenderingMode(.alwaysTemplate)
-        airplaneImageView.tintColor = .lightGray
-        newCommentView.addSubview(airplaneImageView)
-        
-        commentTextField = UITextField(frame: CGRect(x: view.frame.width*0.1, y: 0, width: view.frame.width*0.75, height: 64))
-        commentTextField.placeholder = "Add new comment"
-        commentTextField.layer.sublayerTransform = CATransform3DMakeTranslation(10, 0, 0)
-        commentTextField.autocorrectionType = .no
-        newCommentView.addSubview(commentTextField)
-        
-        postButton = UIButton(frame: CGRect(x: commentTextField.frame.origin.x + commentTextField.frame.width, y: 0, width: view.frame.width*0.15, height: 64))
-        postButton.setTitle("Post", for: .normal)
-        postButton.setTitleColor(UIColor(red: 25/255, green: 181/255, blue: 254/255, alpha: 1.0), for: .normal)
-        newCommentView.addSubview(postButton)
-        
-        let separatorView2 = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 1))
-        separatorView.backgroundColor = UIColor(red: 236/255, green: 240/255, blue: 241/255, alpha: 1.0)
-        newCommentView.addSubview(separatorView2)
+        setupViews()
+        fillUpCommentsArray()
+        print(commentsArray.count)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = commentsTableView.dequeueReusableCell(withIdentifier: "commentCellId") as! CommentCell
         let comment = commentsArray[indexPath.row]
-        cell.commentLabel.text = comment.text
+        print(comment.text)
+        if let text = comment.text {
+           cell.commentLabel.text = text
+        }
         cell.nameLabel.text = comment.user?.name
-        cell.profileImageView.image = user.profileImage
+        cell.profileImageView.image = comment.user?.profileImage
         cell.timeLabel.text = comment.time
         return cell
     }
@@ -150,6 +74,100 @@ class CommentsViewController: UIViewController, UITableViewDelegate, UITableView
         let frameForText = NSString(string: text!).boundingRect(with: CGSize(width: view.frame.width*0.9, height: 2000) , options: NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin), attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 13)], context: nil)
         let height = frameForText.height + 10 + 80
         return height
+    }
+    
+    func makePost() {
+        if commentTextField.text == "" {
+            return
+        }
+        guard let text = commentTextField.text else {
+            return
+        }
+        let date = NSDate() as Date
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "h:mm a"
+        let time = dateFormatter.string(from: date)
+        let comment = Comment(user: user, text: text, profileImage: user.profileImage, time: time)
+        commentsArray.append(comment)
+        let indexPath = IndexPath(row: commentsArray.count - 1, section: 0)
+        commentsTableView.insertRows(at: [indexPath], with: .fade)
+        commentTextField.text = ""
+        let parameters = [
+            "post_id": postId,
+            "user_id": user.id,
+            "text": text
+        ] as [String : Any]
+        Alamofire.request("http://localhost:3000/comment", method: .post, parameters: parameters)
+    }
+    
+    
+    func fillUpCommentsArray() {
+        let parameters = [
+            "post_id": postId
+        ]
+        Alamofire.request("http://localhost:3000/comments", method: .post, parameters: parameters).responseJSON { (response) in
+            //print(response)
+            if let JSON = response.result.value as? [[String:Any]] {
+                print(JSON)
+                if (JSON.count == 0) {
+                    return
+                }
+                for i in (0...JSON.count-1) {
+                    let dict = JSON[i]
+                    let text = dict["text"] as? String
+                    let created_at = dict["created_at"] as! String
+                    let startIndex = created_at.index(created_at.startIndex, offsetBy: 11)
+                    let endIndex = created_at.index(created_at.startIndex, offsetBy: 16)
+                    let timeString = created_at.substring(with: Range<String.Index>(uncheckedBounds: (lower: startIndex, upper: endIndex)))
+                    let parsedTime = parseTime(time: timeString)
+                    let user_id = dict["user_id"] as? Int
+                    
+                    
+                    let parameters2 = [
+                        "user_id": user_id
+                    ]
+                    Alamofire.request("http://localhost:3000/user", method: .post, parameters: parameters2).responseJSON(completionHandler: { (response) in
+                        if let JSON2 = response.result.value as? [[String:Any]] {
+                            print (JSON2)
+                            let userInfo = JSON2[0]
+                            let profileImageURLString = userInfo["profile_image"] as! String
+                            if profileImageURLString == "default" {
+                                let userProfileImage = #imageLiteral(resourceName: "default_profile_pic")
+                                let user = User(id: user_id, name: userInfo["name"] as? String, username: userInfo["username"] as? String, profileImage: userProfileImage)
+                                let newComment = Comment(user: user, text: text, profileImage: userProfileImage, time: parsedTime)
+                                DispatchQueue.main.async {
+                                    print(newComment)
+                                    self.commentsArray.insert(newComment, at: 0)
+                                    let indexPath = IndexPath(row: 0, section: 0)
+                                    self.commentsTableView.insertRows(at: [indexPath], with: .left)
+                                }
+                            } else {
+                                let url = URL(string: profileImageURLString)
+                                let urlRequest = URLRequest(url: url!)
+                                URLSession.shared.dataTask(with: urlRequest, completionHandler: { (data, response, err) in
+                                    print("in url session")
+                                    if (err != nil) {
+                                        print (err)
+                                        return
+                                    }
+                                    let userProfileImage = UIImage(data: data!)
+                                    let user = User(id: user_id, name: userInfo["name"] as? String, username: userInfo["username"] as? String, profileImage: userProfileImage)
+                                    let newComment = Comment(user: user, text: text, profileImage: userProfileImage, time: parsedTime)
+                                    DispatchQueue.main.async {
+                                        print(newComment)
+                                        self.commentsArray.insert(newComment, at: 0)
+                                        let indexPath = IndexPath(row: 0, section: 0)
+                                        self.commentsTableView.insertRows(at: [indexPath], with: .left)
+                                    }
+                                    
+                                }).resume()
+                            }
+                        }
+                    })
+                    
+                }
+            }
+        }
     }
     
     

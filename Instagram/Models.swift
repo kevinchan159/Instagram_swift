@@ -26,6 +26,7 @@ class User {
 
 class Post {
     
+    var id: Int?
     var userId: Int?
     var userName: String?
     var text: String?
@@ -56,5 +57,25 @@ class Comment {
         self.profileImage = profileImage
         self.time = time
     }
+    
+}
+
+// Converts time from created_at column to time like "10:30 PM"
+func parseTime(time: String) -> String {
+    let hourIndex = time.index(time.startIndex, offsetBy: 2)
+    let hour: Int = Int(time.substring(to: hourIndex))!
+    var correctedHour = (hour + 20) % 24
+    if correctedHour > 12 {
+        correctedHour = correctedHour - 12
+        return "\(correctedHour)" + time.substring(from: hourIndex) + " PM"
+    } else if correctedHour == 12 {
+        return "\(correctedHour)" + time.substring(from: hourIndex) + " PM"
+    } else if correctedHour == 0 {
+        correctedHour = correctedHour + 12
+        return "\(correctedHour)" + time.substring(from: hourIndex) + " AM"
+    } else {
+        return "\(correctedHour)" + time.substring(from: hourIndex) + " AM"
+    }
+    
     
 }

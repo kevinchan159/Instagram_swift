@@ -35,11 +35,10 @@ class ProfileImageViewController: UIViewController, UIImagePickerControllerDeleg
         choosePictureButton = UIButton(frame: CGRect(x: 0, y: 0, width: view.frame.width*0.6, height: view.frame.height*0.08))
         choosePictureButton.center = CGPoint(x: view.frame.width/2, y: view.frame.height*0.65)
         choosePictureButton.setTitle("Choose Picture", for: .normal)
-        choosePictureButton.setTitleColor(.black, for: .normal)
+        choosePictureButton.setTitleColor(.white, for: .normal)
         choosePictureButton.backgroundColor = .white
         choosePictureButton.layer.cornerRadius = 5
-        choosePictureButton.layer.borderColor = UIColor.black.cgColor
-        choosePictureButton.layer.borderWidth = 2
+        choosePictureButton.backgroundColor = UIColor(red: 108/255, green: 122/255, blue: 137/255, alpha: 1.0)
         choosePictureButton.addTarget(self, action: #selector(choosePicture), for: .touchUpInside)
         view.addSubview(choosePictureButton)
         
@@ -79,7 +78,7 @@ class ProfileImageViewController: UIViewController, UIImagePickerControllerDeleg
             
             var imageURLString = ""
             
-            if let imageData = UIImagePNGRepresentation(profileImage) {
+            if let imageData = UIImagePNGRepresentation(profileImageView.image!) {
                 let savedImageName = UUID().uuidString
                 let storageRef = Storage.storage().reference().child("\(savedImageName).png")
                 storageRef.putData(imageData, metadata: nil, completion: { (metadata, err) in
