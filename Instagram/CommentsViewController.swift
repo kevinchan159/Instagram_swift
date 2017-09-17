@@ -44,8 +44,6 @@ class CommentsViewController: UIViewController, UITableViewDelegate, UITableView
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: view.window)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: view.window)
         
-//        commentsArray.append(Comment(user: user, text: "First comment", profileImage: user.profileImage, time: "10:02 PM"))
-//        commentsArray.append(Comment(user: user, text: "This is going to be a really long string that goes over one line. Abcdefgh ijklmnop qrs", profileImage: user.profileImage, time: "10:05 PM"))
         
         setupViews()
         fillUpCommentsArray()
