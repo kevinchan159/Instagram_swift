@@ -1,5 +1,5 @@
 //
-//  MainViewController.swift
+//  SecondMainViewController.swift
 //  Instagram
 //
 //  Created by Kevin Chan on 10/21/17.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MainViewController: SWRevealViewController {
+class SecondMainViewController: SWRevealViewController {
     
     var sideBarButton: UIButton!
     

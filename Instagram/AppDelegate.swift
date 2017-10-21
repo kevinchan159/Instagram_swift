@@ -27,7 +27,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        let customPageViewController = CustomPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
 //        customPageViewController.user = user
 //        window?.rootViewController = customPageViewController
-        window?.rootViewController = LoginViewController()
+        window?.rootViewController = MainViewController()
+//        window?.rootViewController = LoginViewController()
         window?.makeKeyAndVisible()
         return true
     }

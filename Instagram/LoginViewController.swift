@@ -189,8 +189,9 @@ class LoginViewController: UIViewController {
     }
     
     func loginUser() {
-        let navigationController = UINavigationController(rootViewController: MainViewController())
-        self.present(navigationController, animated: true, completion: nil)
+//        let navigationController = UINavigationController(rootViewController: MainViewController())
+        let mainViewController = MainViewController()
+        self.present(mainViewController, animated: true, completion: nil)
     }
     
     func setupForLoginView() {
