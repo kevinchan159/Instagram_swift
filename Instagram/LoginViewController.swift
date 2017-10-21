@@ -189,79 +189,8 @@ class LoginViewController: UIViewController {
     }
     
     func loginUser() {
-        guard let username = usernameTextField.text, let password = passwordTextField.text else {
-            return
-        }
-        
-        let parameters: Parameters = [
-            "username": username,
-            "password": password
-        ]
-        
-        Alamofire.request("http://localhost:3000/login", method: .post, parameters: parameters).responseJSON { (response) in
-            print(response)
-            if let JSON = response.result.value as? [String: Any] {
-                if let status = JSON["status"] as? String  {
-                    if status == "error" {
-                        let alert = UIAlertController(title: "Failed to login", message: "Check your login information", preferredStyle: UIAlertControllerStyle.alert)
-                        alert.addAction(UIAlertAction(title: "Close", style: UIAlertActionStyle.default, handler: nil))
-                        self.present(alert, animated: true, completion: nil)
-                    } else {
-                        guard let id = JSON["userId"] as? Int, let name = JSON["userName"] as? String,
-                        let username = JSON["userUsername"] as? String, let profileImageString = JSON["profileImage"] as? String else {
-                                print(JSON["profileImage"])
-                                print("can't find user's id, name, username, and profile image")
-                                return
-                        }
-                        
-                        var profileImage: UIImage?
-                        
-                        if profileImageString == "default" {
-                            profileImage = UIImage(named: "default_profile_pic")
-                            let user = User(id: id, name: name, username: username, profileImage: profileImage)
-                            
-                            Auth.auth().signInAnonymously { (fireUser, err) in
-                                if (err != nil) {
-                                    print(err)
-                                    return
-                                }
-                                let customPageViewController = CustomPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
-                                customPageViewController.user = user
-                                self.present(customPageViewController, animated: true, completion: nil)
-                            }
-
-                        } else {
-                            let url = URL(string: profileImageString)
-                            let urlRequest = URLRequest(url: url!)
-                            URLSession.shared.dataTask(with: urlRequest, completionHandler: { (data, response, err) in
-                                if (err != nil) {
-                                    print(err)
-                                    return
-                                }
-                                profileImage = UIImage(data: data!)
-                                
-                                let user = User(id: id, name: name, username: username, profileImage: profileImage)
-                                
-                                Auth.auth().signInAnonymously { (fireUser, err) in
-                                    if (err != nil) {
-                                        print(err)
-                                        return
-                                    }
-                                    let customPageViewController = CustomPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
-                                    customPageViewController.user = user
-                                    self.present(customPageViewController, animated: true, completion: nil)
-                                    
-                                }
-                            }).resume()
-                        }
-           
-
-                        
-                    }
-                }
-                
-            }
-        }
+        let navigationController = UINavigationController(rootViewController: MainViewController())
+        self.present(navigationController, animated: true, completion: nil)
     }
     
     func setupForLoginView() {

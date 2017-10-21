@@ -45,7 +45,7 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
         
         var camera = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo)
         
-        var input = AVCaptureDeviceInput()
+        var input: AVCaptureDeviceInput
         
         do {
             input = try(AVCaptureDeviceInput(device: camera))
