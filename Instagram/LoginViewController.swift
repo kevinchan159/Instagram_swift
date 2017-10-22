@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Alamofire
 import FirebaseAuth
 
 class LoginViewController: UIViewController {
@@ -161,21 +160,6 @@ class LoginViewController: UIViewController {
     }
     
     func registerUser() {
-        guard let name = nameTextField.text, let username = usernameTextField.text, let password = passwordTextField.text else {
-            return
-        }
-        
-        
-        
-        // use default profile pic. save as "default" in PostgreSQL profile_image property
-        let parameters: Parameters = [
-            "name": name,
-            "username": username,
-            "password": password,
-            "profile_image": "default"
-        ]
-        
-        Alamofire.request("http://localhost:3000/register", method: .post, parameters: parameters)
         self.nameTextField.text = ""
         self.usernameTextField.text = ""
         self.passwordTextField.text = ""
@@ -184,10 +168,8 @@ class LoginViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
             alert.dismiss(animated: true, completion: nil)
         }))
-        
-        
     }
-    
+        
     func loginUser() {
 //        let navigationController = UINavigationController(rootViewController: MainViewController())
         let mainViewController = MainViewController()
