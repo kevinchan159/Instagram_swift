@@ -19,8 +19,6 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
     
     var photoImageView: UIImageView!
     
-    var feedViewController: FeedViewController!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -92,11 +90,6 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
                 
                 self.photoImageView.image = image
                 self.photoImageView.isHidden = false
-                
-                self.feedViewController.photoArray.insert(image, at: 0)
-                let indexPath = IndexPath(item: 0, section: 0)
-                self.feedViewController.photoCollectionView.insertItems(at: [indexPath])
-                
                 DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2, execute: { 
                     self.photoImageView.isHidden = true
                 })

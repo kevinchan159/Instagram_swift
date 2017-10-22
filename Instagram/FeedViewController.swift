@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Alamofire
 
 class FeedViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
